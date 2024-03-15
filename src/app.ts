@@ -1,13 +1,29 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application } from 'express'
+import { AppDataSoure } from './models/dataSoure';
+import cors from 'cors';
 
-const app: Application = express()
+const app: Application = express();
+const port: number = Number(process.env.PORT) || 8000;
 
-const port: number = 3001
+// db설정
+AppDataSoure.initialize()
+    .then(() => { console.log(`DB has initted`) })
+    .catch((err) => { console.error(err) });
 
-app.get('/toto', (req: Request, res: Response) => {
-    res.send('Hello toto')
-})
+// cors 설정
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    credentials: true
+}))
 
-app.listen(port, function () {
+// 기본 설정
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/',);
+
+
+app.listen(port, async () => {
     console.log(`App is listening on port ${port} !`)
 })
