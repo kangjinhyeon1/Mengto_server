@@ -1,6 +1,7 @@
 import express, { Application } from 'express'
 import { AppDataSoure } from './models/dataSoure';
 import cors from 'cors';
+import router from './router';
 
 const app: Application = express();
 const port: number = Number(process.env.PORT) || 8000;
@@ -21,7 +22,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/',);
+app.use('/', router);
 
 
 app.listen(port, async () => {
